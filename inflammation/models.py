@@ -66,7 +66,13 @@ def normalise_patient(data: np.ndarray) -> np.ndarray:
 
     :return: Normalised inflammation data
     :rtype: numpy.ndarray
+
+    :raises ValueError: if any values in `data` are negative
     """
+    if np.any(data < 0):
+        msg = 'Inflammation values should not be negative'
+        raise ValueError(msg)
+
     max = np.nanmax(data, axis=1)
     with np.errstate(invalid='ignore', divide='ignore'):
         normalised = data / max[:, np.newaxis]
