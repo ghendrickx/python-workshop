@@ -3,10 +3,11 @@
 from matplotlib import pyplot as plt
 
 
-def visualize(data_dict):
+def visualize(data_dict: dict) -> None:
     """Display plots of basic statistical properties of the inflammation data.
 
     :param data_dict: Dictionary of name -> data to plot
+    :type data_dict: dict
     """
     # TODO(lesson-design) Extend to allow saving figure to file
 
