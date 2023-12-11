@@ -56,3 +56,19 @@ def daily_min(data: np.ndarray) -> np.ndarray:
     :rtype: numpy.ndarray
     """
     return np.min(data, axis=0)
+
+
+def normalise_patient(data: np.ndarray) -> np.ndarray:
+    """Normalise patient data from a 2D inflammation data array. Normalisation is per patient.
+
+    :param data: Inflammation data
+    :type data: numpy.ndarray
+
+    :return: Normalised inflammation data
+    :rtype: numpy.ndarray
+    """
+    max = np.nanmax(data, axis=1)
+    with np.errstate(invalid='ignore', divide='ignore'):
+        normalised = data / max[:, np.newaxis]
+    normalised[np.isnan(normalised) | (normalised < 0)] = 0
+    return normalised
