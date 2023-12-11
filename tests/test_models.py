@@ -36,7 +36,7 @@ def test_daily_max(test, expected):
         (np.array([[1, 2], [3, 4], [5, 6]]), [1, 2])
     ]
 )
-def test_daily_max(test, expected):
+def test_daily_min(test, expected):
     npt.assert_array_equal(daily_min(test), expected)
 
 
