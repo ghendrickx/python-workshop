@@ -27,6 +27,11 @@ def visualize(data_dict: dict) -> None:
 
 
 def on_screen(data_dict: dict) -> None:
+    """Print basic statistical properties of the inflammation data to the screen.
+
+    :param data_dict: Dictionary of name -> data to plot
+    :type data_dict: dict
+    """
     print('\t'.join(data_dict.keys()))
     for v in zip(*data_dict.values()):
         print('\t'.join(map(str, np.round(v, 4))))
