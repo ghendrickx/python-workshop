@@ -3,6 +3,8 @@
 import numpy as np
 from matplotlib import pyplot as plt
 
+from inflammation.models import Patient
+
 
 def visualize(data_dict: dict) -> None:
     """Display plots of basic statistical properties of the inflammation data.
@@ -26,12 +28,7 @@ def visualize(data_dict: dict) -> None:
     plt.show()
 
 
-def on_screen(data_dict: dict) -> None:
-    """Print basic statistical properties of the inflammation data to the screen.
-
-    :param data_dict: Dictionary of name -> data to plot
-    :type data_dict: dict
-    """
-    print('\t'.join(data_dict.keys()))
-    for v in zip(*data_dict.values()):
-        print('\t'.join(map(str, np.round(v, 4))))
+def display_patient_record(patient: Patient) -> None:
+    print(patient.name)
+    for obs in patient.observations:
+        print(obs.day, obs.value)
