@@ -34,6 +34,18 @@ def daily_mean(data: np.ndarray) -> np.ndarray:
     return np.mean(data, axis=0)
 
 
+def daily_std(data: np.ndarray) -> np.ndarray:
+    """Calculate the daily standard deviation of a 2D inflammation data array.
+
+    :param data: Inflammation data
+    :type data: numpy.ndarray
+
+    :return: Daily standard deviation of inflammation data
+    :rtype: numpy.ndarray
+    """
+    return np.std(data, axis=0)
+
+
 def daily_max(data: np.ndarray) -> np.ndarray:
     """Calculate the daily max of a 2D inflammation data array.
 
