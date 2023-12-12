@@ -6,8 +6,6 @@ Patients' data is held in an inflammation table (2D array) where each row contai
 inflammation data for a single patient taken over a number of days
 and each column represents a single day across all patients.
 """
-import time
-
 import numpy as np
 import typing
 
@@ -142,8 +140,8 @@ class Patient(Person):
             assert all(isinstance(obs, Observation) for obs in observations)
             self.observations = observations
 
-    def __str__(self) -> str:
-        return self.name
+    def __getitem__(self, item: int) -> Observation:
+        return self.observations[item]
 
     def add_observation(self, value: int, day: int = None) -> Observation:
         if day is None:
@@ -159,7 +157,7 @@ class Patient(Person):
         return new_obs
 
     @property
-    def last_observation(self) -> dict:
+    def last_observation(self) -> Observation:
         return self.observations[-1]
 
 
