@@ -6,6 +6,8 @@ Patients' data is held in an inflammation table (2D array) where each row contai
 inflammation data for a single patient taken over a number of days
 and each column represents a single day across all patients.
 """
+import time
+
 import numpy as np
 
 
@@ -106,3 +108,81 @@ def normalise_patient(data: np.ndarray) -> np.ndarray:
         normalised = data / data_max[:, np.newaxis]
     normalised[np.isnan(normalised) | (normalised < 0)] = 0
     return normalised
+
+
+class Observation:
+    """Observation in an inflammation study."""
+
+    def __init__(self, day: int, value: int) -> None:
+        self.day = day
+        self.value = value
+
+    def __str__(self) -> str:
+        return str(self.value)
+
+
+class Person:
+
+    def __init__(self, name: str) -> None:
+        self.name = name
+
+    def __str__(self) -> str:
+        return self.name
+
+
+class Patient(Person):
+    """Patient in one of the inflammation studies."""
+
+    def __init__(self, name: str) -> None:
+        super().__init__(name)
+        self.observations = []
+
+    def __str__(self) -> str:
+        return self.name
+
+    def add_observation(self, value: int, day: int = None) -> Observation:
+        if day is None:
+            try:
+                day = self.observations[-1]['day'] + 1
+            except IndexError:
+                day = 0
+
+        new_obs = Observation(day, value)
+
+        self.observations.append(new_obs)
+
+        return new_obs
+
+    @property
+    def last_observation(self) -> dict:
+        return self.observations[-1]
+
+
+class Doctor(Person):
+    """Doctor involved in an inflammation study."""
+
+    def __init__(self, name: str) -> None:
+        super().__init__(name)
+        self.patients = dict()
+
+    def add_patient(self, patient: Patient) -> None:
+        if not isinstance(patient, Patient):
+            msg = f'The `patient` must be of type `Patient`; {type(patient)} given'
+            raise TypeError(msg)
+
+        if patient.name in self.patients:
+            print(f'{patient} already added to {self} ({self.patients})')
+            return
+
+        self.patients.update({patient.name: patient})
+
+
+def attach_names(data, names) -> list:
+    assert len(data) == len(names), \
+        f'Length of `data` and `names` should match: {len(data)} =/= {len(names)}'
+
+    out = [
+        dict(name=n, data=d) for d, n in zip(data, names)
+    ]
+
+    return out
