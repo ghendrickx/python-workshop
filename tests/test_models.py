@@ -49,6 +49,18 @@ def test_daily_min_string():
     'test, expected, raising',
     [
         (
+            'hello', None, TypeError
+        ),
+        (
+            3, None, TypeError
+        ),
+        (
+            [1, 2, 4], None, ValueError
+        ),
+        (
+            np.zeros((3, 3, 3)), None, ValueError
+        ),
+        (
             [[0, 0, 0], [0, 0, 0], [0, 0, 0]],
             [[0, 0, 0], [0, 0, 0], [0, 0, 0]],
             None
@@ -81,11 +93,13 @@ def test_daily_min_string():
     ]
 )
 def test_patient_normalise(test, expected, raising):
+    if isinstance(test, list):
+        test = np.array(test)
     if raising is None:
-        npt.assert_almost_equal(normalise_patient(np.array(test)), np.array(expected), decimal=2)
+        npt.assert_almost_equal(normalise_patient(test), np.array(expected), decimal=2)
     else:
         with pytest.raises(raising):
             npt.assert_almost_equal(
-                normalise_patient(np.array(test)), np.array(expected), decimal=2
+                normalise_patient(test), np.array(expected), decimal=2
             )
 
