@@ -6,7 +6,6 @@ Patients' data is held in an inflammation table (2D array) where each row contai
 inflammation data for a single patient taken over a number of days
 and each column represents a single day across all patients.
 """
-
 import numpy as np
 
 
@@ -58,7 +57,7 @@ def daily_min(data: np.ndarray) -> np.ndarray:
     return np.min(data, axis=0)
 
 
-def daily_above_threshold(data: np.ndarray, patient_idx: int, threshold: int) -> list:
+def daily_above_threshold(data: np.ndarray, patient_idx: int, threshold: int) -> float:
     """Determine whether or not each daily inflammation value exceeds a given threshold for a given
     patient.
 
@@ -73,8 +72,8 @@ def daily_above_threshold(data: np.ndarray, patient_idx: int, threshold: int) ->
     :return: Boolean list of days exceeding the threshold
     :rtype: list
     """
-    # return (data[patient_idx, :] > threshold)
-    return list(map(lambda x: (x > threshold), data[patient_idx, :]))
+    # return np.sum(data[patient_idx] > threshold)
+    return sum(map((lambda x: int(x > threshold)), data[patient_idx]))
 
 
 def normalise_patient(data: np.ndarray) -> np.ndarray:
