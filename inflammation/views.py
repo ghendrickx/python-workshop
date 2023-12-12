@@ -1,5 +1,6 @@
 """Module containing code for plotting inflammation data."""
 
+import numpy as np
 from matplotlib import pyplot as plt
 
 
@@ -23,3 +24,9 @@ def visualize(data_dict: dict) -> None:
     fig.tight_layout()
 
     plt.show()
+
+
+def on_screen(data_dict: dict) -> None:
+    print('\t'.join(data_dict.keys()))
+    for v in zip(*data_dict.values()):
+        print('\t'.join(map(str, np.round(v, 4))))
