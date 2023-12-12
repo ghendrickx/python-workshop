@@ -6,6 +6,14 @@ import argparse
 from inflammation import models, views
 
 
+def poem(func):
+
+    def wrapper_func(*args, **kwargs):
+        func(*args, **kwargs)
+        import this
+    return wrapper_func
+
+@poem
 def main(files):
     """The MVC Controller of the patient inflammation data system.
 
