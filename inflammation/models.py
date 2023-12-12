@@ -67,8 +67,18 @@ def normalise_patient(data: np.ndarray) -> np.ndarray:
     :return: Normalised inflammation data
     :rtype: numpy.ndarray
 
+    :raises TypeError: if `data` is not a `numpy.ndarray`
+    :raises ValueError: if `data` is not two-dimensional
     :raises ValueError: if any values in `data` are negative
     """
+    if not isinstance(data, np.ndarray):
+        msg = f'`data`-argument must be a `numpy.ndarray`; {type(data)} given'
+        raise TypeError(msg)
+
+    if not len(data.shape) == 2:
+        msg = f'`data`-argument should have two dimensions; {len(data.shape)} given'
+        raise ValueError(msg)
+
     if np.any(data < 0):
         msg = 'Inflammation values should not be negative'
         raise ValueError(msg)
