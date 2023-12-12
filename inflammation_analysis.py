@@ -3,6 +3,8 @@
 
 import argparse
 
+import numpy as np
+
 from inflammation import models, views
 
 
@@ -17,9 +19,14 @@ def main(args):
     if not isinstance(in_files, list):
         in_files = [args.infiles]
 
+    # skip if no view is required
+    if (not on_screen) and (not as_graph):
+        print(f'Data not processed: Both visualisations disabled.')
+        return
+
+    # process and view data
     for filename in in_files:
         inflammation_data = models.load_csv(filename)
-
         if args.view == 'visualise':
             view_data = {
                 'average': models.daily_mean(inflammation_data),
@@ -38,6 +45,36 @@ def main(args):
 
 
 if __name__ == "__main__":
+
+
+    def str2bool(s: str) -> bool:
+        """Convert string-value to boolean:
+         -  True:   {'1', 't', 'y', 'true', 'yes', 'on'}
+         -  False:  {'0', 'f', 'n', 'false', 'no', 'off'}
+
+        :param s: string-representation
+        :type s: str
+
+        :return: boolean representation
+        :rtype: bool
+
+        :raises TypeError: if `s` is not a string
+        :raises ValueError: if `s` cannot be represented as a boolean
+        """
+        if not isinstance(s, str):
+            msg = f'Argument should be a string; {type(s)} given'
+            raise TypeError(msg)
+
+        s = s.lower()
+        if s in ('1', 't', 'y', 'true', 'yes', 'on'):
+            return True
+        elif s in ('0', 'f', 'n', 'false', 'no', 'off'):
+            return False
+
+        msg = 'Invalid truth value'
+        raise ValueError(msg)
+
+
     parser = argparse.ArgumentParser(
         description='A basic patient inflammation data management system'
     )

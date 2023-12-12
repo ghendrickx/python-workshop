@@ -1,5 +1,6 @@
 """Module containing code for plotting inflammation data."""
 
+import numpy as np
 from matplotlib import pyplot as plt
 
 from inflammation.models import Patient
