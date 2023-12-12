@@ -2,6 +2,8 @@
 
 from matplotlib import pyplot as plt
 
+from inflammation.models import Patient
+
 
 def visualize(data_dict: dict) -> None:
     """Display plots of basic statistical properties of the inflammation data.
@@ -23,3 +25,9 @@ def visualize(data_dict: dict) -> None:
     fig.tight_layout()
 
     plt.show()
+
+
+def display_patient_record(patient: Patient) -> None:
+    print(patient.name)
+    for obs in patient.observations:
+        print(obs.day, obs.value)

@@ -9,6 +9,7 @@ and each column represents a single day across all patients.
 import time
 
 import numpy as np
+import typing
 
 
 def load_csv(filename: str) -> np.ndarray:
@@ -133,9 +134,13 @@ class Person:
 class Patient(Person):
     """Patient in one of the inflammation studies."""
 
-    def __init__(self, name: str) -> None:
+    def __init__(self, name: str, observations: typing.List[Observation] = None) -> None:
         super().__init__(name)
-        self.observations = []
+        if observations is None:
+            self.observations = []
+        else:
+            assert all(isinstance(obs, Observation) for obs in observations)
+            self.observations = observations
 
     def __str__(self) -> str:
         return self.name
