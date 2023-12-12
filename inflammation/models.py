@@ -83,8 +83,8 @@ def normalise_patient(data: np.ndarray) -> np.ndarray:
         msg = 'Inflammation values should not be negative'
         raise ValueError(msg)
 
-    max = np.nanmax(data, axis=1)
+    data_max = np.nanmax(data, axis=1)
     with np.errstate(invalid='ignore', divide='ignore'):
-        normalised = data / max[:, np.newaxis]
+        normalised = data / data_max[:, np.newaxis]
     normalised[np.isnan(normalised) | (normalised < 0)] = 0
     return normalised
